@@ -1,0 +1,8 @@
+C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\bin\Release\JiraExample.exe
+C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\bin\Release\JiraExample.pdb
+C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\bin\Release\Newtonsoft.Json.dll
+C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\bin\Release\Newtonsoft.Json.pdb
+C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\bin\Release\Newtonsoft.Json.xml
+C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\obj\x86\Release\JiraExample.exe
+C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\obj\x86\Release\JiraExample.pdb
