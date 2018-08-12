@@ -79,6 +79,7 @@ namespace JiraExample
             string projectsString = RunQuery(JiraResource.project);
 
             return JsonConvert.DeserializeObject<List<ProjectDescription>>(projectsString);
+
         }
 
         public List<Issue> GetIssues(
