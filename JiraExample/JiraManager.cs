@@ -91,6 +91,7 @@ namespace JiraExample
             fields = fields ?? new List<string>{"summary", "status", "assignee", "sprint"};
 
             SearchRequest request = new SearchRequest();
+
             request.Fields = fields;
 
             request.JQL = jql;
