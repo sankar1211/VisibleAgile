@@ -92,6 +92,7 @@ namespace JiraExample
 
             SearchRequest request = new SearchRequest();
             request.Fields = fields;
+
             request.JQL = jql;
             request.MaxResults = maxResult;
             request.StartAt = startAt;
