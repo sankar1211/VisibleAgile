@@ -12,6 +12,7 @@ namespace JiraExample
     public enum JiraResource
     {
         project,
-        search
+        search,
+		board
     }
 }

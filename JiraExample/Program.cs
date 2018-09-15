@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using JiraExample.Entities.Projects;
 using JiraExample.Entities.Issues;
+using JiraExample.Entities.Boards;
+using JiraExample.Entities.Sprints;
 
 namespace JiraExample
 {
@@ -13,59 +15,87 @@ class Program
     {
         Console.WriteLine("Hello and welcome to a Jira Example application!");
 
-		Console.Write("Enter Base URL <Default: https://visibleagile.atlassian.net/rest/api/latest/");
+		Console.Write("Enter Base URL <Default: https://visibleagile.atlassian.net/> :");
 		string baseUrl = Console.ReadLine();
 
-		if(baseUrl.Trim().Length == 0)
-			baseUrl = "https://visibleagile.atlassian.net/rest/api/latest/";
-
+		if (baseUrl.Trim().Length == 0)
+			baseUrl = "https://visibleagile.atlassian.net/";
+	
 		#region Create manager
-		Console.Write("Username: ");
+		Console.Write("Username: <Default: sankar72@outlook.com>");
         string username = Console.ReadLine();
 
-        Console.Write("Password: ");
+		if (username.Trim().Length == 0)
+			username = "sankar72@outlook.com";
+
+		Console.Write("Password: ");
         string password = Console.ReadLine();
 
-        JiraManager manager = new JiraManager(baseUrl, username, password);
-        #endregion
+		if (username.Trim().Equals("sankar72@outlook.com") == true)
+			password = "ABHI123$";
 
-        Console.Clear();
+		JiraManager manager = new JiraManager(baseUrl, username, password);
+		#endregion
 
-        List<ProjectDescription> projects = manager.GetProjects();
-        Console.WriteLine("Select a project: ");
-        for (int i = 0; i < projects.Count; i++)
-        {
-            Console.WriteLine("{0}: {1}", i, projects[i].Name);
-        }
+		Console.Clear();
+			
+		// Get List of Boards
+		BoardsDescription bd = manager.GetBoards(baseUrl);
+		List <BoardsData> boards = bd.Values;
 
-        Console.Write("Project to open: ");
-        string projectStringIndex = Console.ReadLine();
-        int projectIndex = 0;
-        if (!int.TryParse(projectStringIndex, out projectIndex))
-        {
-            Console.WriteLine("You failed to select a project...");
-            Environment.Exit(0);
-        }
+		if (boards.Count == 0)
+		{
+			Console.WriteLine("No Boards created yet");
+			return;
+		}
 
-        ProjectDescription selectedProject = projects[projectIndex];
-        string projectKey = selectedProject.Key;
+		Console.WriteLine("Select a Board: ");
 
-        string jql = "project = " + projectKey;
-        List<Issue> issueDescriptions = manager.GetIssues(jql);
-        string name = "";
-        foreach (Issue description in issueDescriptions)
-        {
-                if (description.Fields.Assignee == null)
-                    name = "Not Assigned";
-                else
-                    name = description.Fields.Assignee.DisplayName;
+		for (int i = 0; i < boards.Count; i++)
+		{
+			Console.WriteLine("{0}: {1}", i, boards[i].Name);
+		}
 
-           Console.WriteLine("{0}: {1}: {2}", description.Key, description.Fields.Summary, name);
-        }
+		Console.Write("Boards to open: ");
 
-        
+		string boardsStringIndex = Console.ReadLine();
+		int boardIndex = 0;
+		if (!int.TryParse(boardsStringIndex, out boardIndex))
+		{
+			Console.WriteLine("You failed to select a board...");
+			Environment.Exit(0);
+		}
 
-        Console.Read();
+		BoardsData selectedBoard = boards[boardIndex];
+
+			if (selectedBoard.Type.Equals("scrum"))
+			{
+
+				SprintsDescription sprintsDescription = manager.GetSprints(selectedBoard.Id);
+
+				List<SprintData> sprints = sprintsDescription.Values;
+
+				if (sprints.Count != 0)
+				{
+					for (int i = 0; i < sprints.Count; i++)
+					{
+						int numIssues = manager.GetNumIssues(selectedBoard.Id, sprints[i].Id);
+						Console.WriteLine("Number of issues in Sprint " + sprints[i].Id + ": " + sprints[i].Name + " are " + numIssues);
+					}
+					
+				}
+				else
+				{
+					Console.WriteLine("No Sprints created yet");
+									}
+
+				
+			}
+			else
+			{
+				Console.WriteLine("Does Not support Non-scrum");
+			}
+		Console.Read();
     }
 }
 }

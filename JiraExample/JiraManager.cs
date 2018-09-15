@@ -5,9 +5,11 @@ using System.Text;
 using System.Net;
 using System.IO;
 using JiraExample.Entities.Projects;
+using JiraExample.Entities.Boards;
 using Newtonsoft.Json;
 using JiraExample.Entities.Issues;
 using JiraExample.Entities.Searching;
+using JiraExample.Entities.Sprints;
 
 namespace JiraExample
 {
@@ -33,17 +35,16 @@ namespace JiraExample
         /// <param name="data">More advanced data sent in POST requests</param>
         /// <param name="method">Either GET or POST</param>
         /// <returns></returns>
-        protected string RunQuery(
-            JiraResource resource, 
+        protected string RunQuery(            
             string argument = null, 
             string data = null,
             string method = "GET")
         {
-            string url = string.Format("{0}{1}/", m_BaseUrl, resource.ToString());
+            string url = "";
 
             if (argument != null)
             {
-                url = string.Format("{0}{1}/", url, argument);
+                url = string.Format("{0}{1}/", m_BaseUrl, argument);
             }
 
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -61,56 +62,98 @@ namespace JiraExample
             string base64Credentials = GetEncodedCredentials();
             request.Headers.Add("Authorization", "Basic " + base64Credentials);
 
-
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+			HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
             string result = string.Empty;
-            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-            {
-                result = reader.ReadToEnd();
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))           
+{
+            result = reader.ReadToEnd();
             }
 
             return result;
         }
+		
+		
+		public BoardsDescription GetBoards(string baseUrl,
+			string type = "scrum",
+			string name = null,
+			int startAt = 0,
+			int maxResult = 50)
+		{
+			SearchRequestBoards request = new SearchRequestBoards();
 
-        public List<ProjectDescription> GetProjects()
-        {
-            List<ProjectDescription> projects = new List<ProjectDescription>();
-            string projectsString = RunQuery(JiraResource.project);
+			request.Name = name;
+			request.ProjectKeyOrId = "VATT";
+			request.MaxResults = maxResult;
+			request.StartAt = startAt;
+			request.Type = type;
 
-            return JsonConvert.DeserializeObject<List<ProjectDescription>>(projectsString);
+			string data = JsonConvert.SerializeObject(request);
+			string extUrl = "rest/agile/1.0/board";
+			//string result = RunQueryBoard();
+			string result = RunQuery(extUrl);
 
-        }
+			return JsonConvert.DeserializeObject<BoardsDescription>(result);
+		}
 
-        public List<Issue> GetIssues(
-            string jql, 
-            List<string> fields = null,
-            int startAt = 0, 
-            int maxResult = 50)
-        {
-            fields = fields ?? new List<string>{"summary", "status", "assignee", "sprint"};
+		public SprintsDescription GetSprints(
+			int boardId,
+			string state = "active",
+			List<string> fields = null,
+			int startAt = 0,
+			int maxResult = 50)
+		{
+			SearchRequestBoards request = new SearchRequestBoards();
 
-            SearchRequest request = new SearchRequest();
+			//request.ProjectKeyOrId = "VATT";
+			request.MaxResults = maxResult;
+			request.StartAt = startAt;
 
-            request.Fields = fields;
+			string data = JsonConvert.SerializeObject(request);
 
-            request.JQL = jql;
-            request.MaxResults = maxResult;
-            request.StartAt = startAt;
+			
+			string extUrl = "rest/agile/1.0/board/";
 
-            string data = JsonConvert.SerializeObject(request);
-            string result = RunQuery(JiraResource.search, data: data, method: "POST");
+			string argument = string.Format("{0}{1}{2}", extUrl, boardId, "/sprint");
+			//string result = RunQueryBoard();
+			string result = RunQuery(argument);
 
-            SearchResponse response = JsonConvert.DeserializeObject<SearchResponse>(result);
+			return JsonConvert.DeserializeObject<SprintsDescription>(result);
+		}
 
-            return response.IssueDescriptions;
-        }
+		public int GetNumIssues(
+			int boardId,
+			int sprintId,
+			string state = "active",
+			List<string> fields = null,
+			int startAt = 0,
+			int maxResult = 50)
+		{
+			SearchRequestBoards request = new SearchRequestBoards();
 
-        private string GetEncodedCredentials()
+			request.ProjectKeyOrId = "VATT";
+			request.MaxResults = maxResult;
+			request.StartAt = startAt;
+
+			string data = JsonConvert.SerializeObject(request);
+
+
+			string extUrl = "rest/agile/1.0/board/";
+
+			string argument = string.Format("{0}{1}{2}{3}{4}/", extUrl, boardId, "/sprint/", sprintId, "/issue/");
+			//string result = RunQueryBoard();
+			string result = RunQuery(argument);
+
+			IssueDescription issueDescription =  JsonConvert.DeserializeObject<IssueDescription>(result);
+			return issueDescription.Total;
+		}
+		private string GetEncodedCredentials()
         {
             string mergedCredentials = string.Format("{0}:{1}", m_Username, m_Password);
             byte[] byteCredentials = UTF8Encoding.UTF8.GetBytes(mergedCredentials);
             return Convert.ToBase64String(byteCredentials);
         }
+
+		
     }
 }

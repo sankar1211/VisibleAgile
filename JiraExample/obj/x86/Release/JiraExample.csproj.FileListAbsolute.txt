@@ -6,3 +6,7 @@ C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects
 C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\obj\x86\Release\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\obj\x86\Release\JiraExample.exe
 C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\obj\x86\Release\JiraExample.pdb
+G:\JiraExample\JiraExample\JiraExample\bin\Release\JiraExample.exe
+G:\JiraExample\JiraExample\JiraExample\bin\Release\JiraExample.pdb
+G:\JiraExample\JiraExample\JiraExample\obj\x86\Release\JiraExample.exe
+G:\JiraExample\JiraExample\JiraExample\obj\x86\Release\JiraExample.pdb

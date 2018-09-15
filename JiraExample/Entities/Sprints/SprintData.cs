@@ -5,7 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using JiraExample.Entities.Misc;
 
-namespace JiraExample.Entities.Projects
+namespace JiraExample.Entities.Sprints
 {
     /// <summary>
     /// A class representing a project descriptin in JIRA

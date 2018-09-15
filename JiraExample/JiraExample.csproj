@@ -47,13 +47,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Boards\BoardsData.cs" />
+    <Compile Include="Entities\Boards\BoardsDescription.cs" />
     <Compile Include="Entities\Issues\Assignee.cs" />
     <Compile Include="Entities\Issues\Fields.cs" />
     <Compile Include="Entities\Issues\Issue.cs" />
     <Compile Include="Entities\Issues\IssueKey.cs" />
+    <Compile Include="Entities\Issues\IssueDescription.cs" />
     <Compile Include="Entities\Issues\Status.cs" />
     <Compile Include="Entities\Misc\AvatarUrls.cs" />
-    <Compile Include="Entities\Projects\SprintData.cs" />
+    <Compile Include="Entities\Searching\SearchRequestBoards.cs" />
+    <Compile Include="Entities\Searching\SearchRequestSprints.cs" />
+    <Compile Include="Entities\Searching\SearchResponseSprints.cs" />
+    <Compile Include="Entities\Sprints\SprintsDescription.cs" />
+    <Compile Include="Entities\Sprints\SprintData.cs" />
     <Compile Include="Entities\Projects\ProjectDescription.cs" />
     <Compile Include="Entities\Searching\SearchRequest.cs" />
     <Compile Include="Entities\Searching\SearchResponse.cs" />

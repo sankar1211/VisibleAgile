@@ -13,8 +13,5 @@ C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects
 C:\Documents and Settings\Administrator\my documents\visual studio 2010\Projects\JiraExample\JiraExample\obj\x86\Debug\ResolveAssemblyReference.cache
 G:\JiraExample\JiraExample\JiraExample\bin\Debug\JiraExample.exe
 G:\JiraExample\JiraExample\JiraExample\bin\Debug\JiraExample.pdb
-G:\JiraExample\JiraExample\JiraExample\bin\Debug\Newtonsoft.Json.pdb
-G:\JiraExample\JiraExample\JiraExample\bin\Debug\Newtonsoft.Json.xml
-G:\JiraExample\JiraExample\JiraExample\obj\x86\Debug\JiraExample.csprojResolveAssemblyReference.cache
 G:\JiraExample\JiraExample\JiraExample\obj\x86\Debug\JiraExample.exe
 G:\JiraExample\JiraExample\JiraExample\obj\x86\Debug\JiraExample.pdb
